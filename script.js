@@ -34,7 +34,7 @@ async function startGame() {
   grajace.push(celao);
 
   await wtekst("scena1_1");
-  let ac = await wybor("scena1_2x");
+  let ac = await wybor("scena1_2x", 5);
   console.log(ac);
   okno_gry.classList.remove("tlo1");
   okno_gry.classList.add("tlo2");
@@ -43,7 +43,7 @@ async function startGame() {
     ac //pierwszy wybor
   ) {
     case 1:
-      await wtekst("scena1_2a");
+      await wtekst("scena1_2a", 4);
       konrad.inmate_trust = true;
       break;
 
@@ -356,6 +356,79 @@ async function wybor(scene) {
   });
 }
 
+async function wybor(scene, limitCzasu) {
+  const okno_wyboru = document.getElementById("choices");
+  okno_wyboru.innerHTML = "";
+  gameState.currentScene = scene;
+  let sceneText = tekst[scene];
+
+  // If time limit is provided, create timer UI
+  if (limitCzasu) {
+    // Create timer bar
+    const pasekCzasu = document.createElement("div");
+    pasekCzasu.id = "timer-container";
+    pasekCzasu.innerHTML = `<div id="timer-bar" style="height: 20px; background-color: red; width: 100%; transition: width ${limitCzasu}s linear;"></div>`;
+    okno_wyboru.appendChild(pasekCzasu);
+
+    let timeoutId;
+    let resolved = false;
+
+    return new Promise(function (resolve) {
+      // Create choice buttons
+      for (let i = 0; i < sceneText.length; i++) {
+        let przycisk = document.createElement("button");
+        przycisk.id = "scene-choice-" + scene + "-" + i;
+        przycisk.classList.add("scene-button");
+        przycisk.textContent = sceneText[i];
+
+        (function (numer) {
+          przycisk.addEventListener("click", function () {
+            if (!resolved) {
+              resolved = true;
+              clearTimeout(timeoutId);
+              resolve(numer);
+            }
+          });
+        })(i + 1);
+
+        okno_wyboru.appendChild(przycisk);
+      }
+
+      // Start timer animation
+      const timerBar = document.getElementById("timer-bar");
+      setTimeout(() => {
+        timerBar.style.width = "0%";
+      }, 0);
+
+      // Timeout handler
+      timeoutId = setTimeout(() => {
+        if (!resolved) {
+          resolved = true;
+          resolve(0); // Return 0 for timeout
+        }
+      }, limitCzasu * 1000);
+    });
+  } else {
+    // Regular choice without time limit
+    return new Promise(function (resolve) {
+      for (let i = 0; i < sceneText.length; i++) {
+        let przycisk = document.createElement("button");
+        przycisk.id = "scene-choice-" + scene + "-" + i;
+        przycisk.classList.add("scene-button");
+        przycisk.textContent = sceneText[i];
+
+        (function (numer) {
+          przycisk.addEventListener("click", function () {
+            resolve(numer);
+          });
+        })(i + 1);
+
+        okno_wyboru.appendChild(przycisk);
+      }
+    });
+  }
+}
+ 
 async function wtekst(scene) {
   const okno_tekstu = document.getElementById("main-game");
   const okno_wyboru = document.getElementById("choices");
@@ -422,7 +495,3 @@ document.getElementById("mute-btn").addEventListener("click", () => {
     muteButton.classList.remove("cisza");
   }
 });
-
-function timer (){
-  getElementById("timer-bar")
-}
