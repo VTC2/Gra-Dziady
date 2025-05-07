@@ -20,7 +20,7 @@ startGame();
 async function startGame() {
 
 
-  const okno_gry = document.getElementById("main-game");
+  const okno_gry = document.getElementById("body");
   await wtekst("prolog");
   await title("Oprawa dźwiekowa i graficzna jest nieskończona.");
   await title("WIĘZIENIE W WILNIE");
