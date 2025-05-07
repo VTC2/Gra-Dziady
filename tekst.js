@@ -1,4 +1,4 @@
-{
+let tekst = {
     "prolog": [
         "Polska, rok 1823. Kraj rozdarty przez zaborców, gdzie wolność jest jedynie wspomnieniem, a nadzieja na niepodległość – marzeniem młodych serc. W Wilnie, pod czujnym okiem rosyjskiego kuratora Mikołaja Nowosilcowa, rozwija się tajna działalność patriotyczna. To tutaj, w murach Uniwersytetu Wileńskiego, narodziły się stowarzyszenia Filomatów i Filaretów – młodych ludzi, którzy wierzyli w siłę nauki, moralności i przyjaźni jako fundamenty odrodzenia narodu.",
         "Jednak ich ideały nie mogły pozostać niezauważone. W 1823 roku Nowosilcow rozpoczął brutalne śledztwo, które miało na celu nie tylko rozbicie tych organizacji, ale także zastraszenie całego społeczeństwa polskiego. Aresztowania, przesłuchania i wyroki zesłania stały się codziennością dla młodych patriotów. Wśród nich był Adam Mickiewicz – poeta, który swoje doświadczenia więzienne przekształcił w literacki pomnik narodowego cierpienia i walki.",

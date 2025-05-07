@@ -3,8 +3,8 @@
 let gameState = {
   currentScene: "prolog",
 };
+let a = 0;
 
-let tekst = {};
 let konrad = {
   mist: 0,
   rew: true,
@@ -18,8 +18,7 @@ let isCicho = false;
 startGame();
 
 async function startGame() {
-  const response = await fetch("tekst.json");
-  tekst = await response.json();
+
 
   const okno_gry = document.getElementById("main-game");
   await wtekst("prolog");
@@ -357,7 +356,6 @@ async function wybor(scene) {
   });
 }
 
-let a = 0;
 async function wtekst(scene) {
   const okno_tekstu = document.getElementById("main-game");
   const okno_wyboru = document.getElementById("choices");
