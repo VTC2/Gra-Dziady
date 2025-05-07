@@ -1,115 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Spectral:wght@300;400&display=swap');
+
+:root {
+  --font-primary: 'Crimson Pro', serif;
+  --font-secondary: 'Spectral', serif;
+  --color-text: #c5c0b0; /* Zgaszony, pergaminowy tekst */
+  --color-text-darker: #3a352f;
+  --color-background: #1a1612; /* Bardzo ciemny brąz/sepia */
+  --color-book-cover: #4a3b30;
+  --color-book-cover-darker: #30251e;
+  --color-book-pages: #f5eeda;
+  --color-book-pages-edge: #e0d6b9;
+  --color-accent: #a8905a; /* Złoty/mosiądz */
+  --color-accent-dark: #7a653a;
+  --color-shadow: rgba(0, 0, 0, 0.5);
+  --color-highlight: rgba(255, 255, 240, 0.1);
+
+  --book-width: 70vw; /* Szerokość otwartej książki */
+  --book-height: 80vh; /* Wysokość książki */
+  --book-depth: 5vh; /* Grubość książki */
+  --cover-thickness: 0.5vh;
+}
+
+/* --- Global & Reset --- */
 * {
-  --sec: #e8db95;
-  --comp: #95A2E8;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: #111;
-  color: #eee;
-  font-family: Helvetica, sans-serif;
-
+  font-family: var(--font-secondary);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow: hidden; /* Kluczowe dla animacji pełnoekranowej */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  perspective: 2500px; /* Głęboka perspektywa dla efektów 3D */
 }
 
-button {
-  padding: 10px 20px;
-  background-color: var(--sec);
-  color: black;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #888056;
-  color: white;
-}
-
-
-#main-game {
-  position: relative;
-  height: 60vh;
-  overflow-y: auto;
-  padding: 30px;
-  border: solid 10px var(--sec);
-  border-bottom: 0px;
-  background-color: transparent;
-}
-
-#main-game::after {
-  content: "";
-  position: absolute;
+/* --- Overlay ładowania --- */
+#book-loading-overlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  filter: blur(20px) brightness(0.5) saturate(0.2);
-  z-index: -1;
-}
-
-.tlo1::after {
-  background-image: url(img/wersja1.jpg);
-  background-attachment: fixed;
-  position: fixed;
-
-}
-.tlo-escape::after {
-  background-image: url();
-}
-.tlo2::after {
-  background-image: url(img/3.jpg);
-  background-attachment: fixed;
-  position: fixed;
-}
-.tlo-salon::after {
-  filter: blur(12px) brightness(0.5) saturate(0.9) !important;
-  background-image: url(img/salon.jpeg);
-
-  background-position-y: -500px;
-}
-.tlo-widzenie::after {
-  background-image: url(img/widzenie.png);
-}
-.tlo-bal::after {
-  background-image: url(img/bal.png);
-  filter: blur(12px) brightness(0.5) saturate(0.9) !important;
-}
-#choices {
-  background-color: black;
-  border: solid 10px var(--sec);
+  background-color: var(--color-background);
   display: flex;
-  height: 24VH;
   flex-direction: column;
-  justify-content: space-evenly;
-  padding: 20px;
-  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out;
+}
+#book-loading-overlay p {
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid var(--color-accent-dark);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+body.book-loaded #book-loading-overlay {
+  opacity: 0;
+  pointer-events: none;
 }
 
-p {
-  border-left: solid 5px var(--sec);
-  border-radius: 13px;
-  padding: 10px;
+
+/* --- Środowisko Książki --- */
+#book-environment {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease-in-out 0.5s; /* Opóźnione pojawienie się */
+  opacity: 0; /* Początkowo niewidoczne */
+}
+body.book-loaded #book-environment {
+  opacity: 1;
+}
+
+
+/* --- Kontener i Struktura Książki 3D --- */
+#book-container {
+  width: var(--book-width);
+  height: var(--book-height);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transform: translateZ(-100px) rotateX(20deg) rotateY(-30deg); /* Początkowa pozycja */
+}
+
+#book {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.2s ease-in-out;
+}
+
+.book-panel {
+  position: absolute;
+  width: calc(var(--book-width) / 2); /* Połowa szerokości książki dla okładek i stron */
+  height: var(--book-height);
+  background-color: var(--color-book-pages);
+  border: 1px solid var(--color-book-cover-darker);
+  transform-style: preserve-3d;
+  backface-visibility: hidden; /* Ukrywa tylną stronę elementu podczas obrotu */
+  overflow: hidden;
+}
+
+/* Okładki */
+#book-cover-front {
+  left: 0;
+  background-color: var(--color-book-cover);
+  transform-origin: left center;
+  z-index: 20;
+  transition: transform 2s cubic-bezier(0.5, 0, 0.1, 1) 1s; /* Opóźniona animacja otwierania */
+  box-shadow: inset 5px 0 15px rgba(0,0,0,0.3), 3px 3px 10px var(--color-shadow);
+  background-image: url('path/to/your/leather-texture.jpg'); /* DODAJ ŚCIEŻKĘ DO TEKSTURY SKÓRY */
+}
+.cover-art {
+  width: 100%; height: 100%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+}
+.cover-title-main { font-family: var(--font-primary); font-size: 4vw; color: var(--color-accent); text-shadow: 2px 2px 2px #000; }
+.cover-title-subtitle { font-family: var(--font-primary); font-size: 2vw; color: var(--color-text); margin: 10px 0; }
+.cover-title-author { font-family: var(--font-secondary); font-size: 1.5vw; color: var(--color-text); font-style: italic; }
+
+.cover-decoration { /* Narożniki na okładce */
+  position: absolute;
+  width: 50px; height: 50px;
+  /* background-image: url('path/to/your/corner-ornament.png'); */ /* DODAJ ŚCIEŻKĘ DO ORNAMENTU */
+  border: 2px solid var(--color-accent-dark); /* Placeholder */
+  opacity: 0.7;
+}
+.top-left { top: 15px; left: 15px; }
+.top-right { top: 15px; right: 15px; }
+.bottom-left { bottom: 15px; left: 15px; }
+.bottom-right { bottom: 15px; right: 15px; }
+
+.spine-simulation { /* Symulacja grzbietu po lewej stronie przedniej okładki */
+  position: absolute;
+  left: -1px; top:0; bottom:0; width: 15px; /* Szerokość grzbietu */
+  background: linear-gradient(to right, var(--color-book-cover-darker), var(--color-book-cover));
+  box-shadow: inset 2px 0 5px rgba(0,0,0,0.4);
+}
+
+
+#book-cover-back {
+  right: 0;
+  background-color: var(--color-book-cover);
+  transform: rotateY(180deg) translateZ(var(--cover-thickness)); /* Odwrócona i na końcu stosu */
+  z-index: 1;
+  box-shadow: inset -5px 0 15px rgba(0,0,0,0.3), -3px 3px 10px var(--color-shadow);
+  background-image: url('path/to/your/leather-texture.jpg'); /* DODAJ ŚCIEŻKĘ DO TEKSTURY SKÓRY */
+}
+.cover-art-back {
+    width:100%; height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+}
+
+/* Strony Książki */
+.book-page {
+  background-color: var(--color-book-pages);
+  box-shadow: inset 3px 0px 10px rgba(0,0,0,0.15); /* Cień od grzbietu */
+  color: var(--color-text-darker);
+  font-family: var(--font-primary);
+}
+.page-content { padding: 40px; overflow-y: auto; height: 100%; }
+.page-content h2 { font-size: 2em; color: var(--color-text-darker); margin-bottom: 20px; }
+.page-intro-text { font-size: 1.1em; line-height: 1.6; font-style: italic; }
+
+#book-page1 { left: 0; transform: rotateY(0deg) translateZ(calc(var(--cover-thickness) * 1 + 0.1vh)); z-index: 15; transition: transform 1.8s cubic-bezier(0.5, 0, 0.1, 1) 1.3s; transform-origin: left center;}
+#book-page2 { left: 0; transform: rotateY(0deg) translateZ(calc(var(--cover-thickness) * 1 + 0.2vh)); z-index: 14; transition: transform 1.7s cubic-bezier(0.5, 0, 0.1, 1) 1.45s; transform-origin: left center;}
+#book-page3 { /* Strona z zawartością gry */
+  left: 0; /* Będzie po lewej stronie po otwarciu */
+  width: calc(var(--book-width) / 2); /* Lewa strona gry */
+  transform: rotateY(0deg) translateZ(calc(var(--cover-thickness) * 1 + 0.3vh));
+  z-index: 13;
+  transition: transform 1.6s cubic-bezier(0.5, 0, 0.1, 1) 1.6s;
+  transform-origin: left center;
+  background-image: url('path/to/your/paper-texture.jpg'); /* DODAJ ŚCIEŻKĘ DO TEKSTURY PAPIERU */
+}
+#book-page4 { /* Prawa strona gry / "grubość" stron po prawej */
+  right:0;
+  width: calc(var(--book-width) / 2);
+  transform: rotateY(180deg) translateZ(calc(var(--book-depth) - var(--cover-thickness) - 0.3vh));
+  z-index: 2;
+  background-image: url('path/to/your/paper-texture.jpg'); /* DODAJ ŚCIEŻKĘ DO TEKSTURY PAPIERU */
+  /* Symulacja krawędzi stron */
+  border-left: 2px solid var(--color-book-pages-edge);
+  box-shadow: inset 10px 0px 15px -10px rgba(0,0,0,0.2); /* Cień od bloku stron */
+}
+
+/* Krawędź stron (symulacja) */
+#book::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--book-width) / 2 - var(--book-depth) / 2);
+  top: var(--cover-thickness);
+  bottom: var(--cover-thickness);
+  width: var(--book-depth);
+  background: linear-gradient(to right, var(--color-book-pages-edge), var(--color-book-pages), var(--color-book-pages-edge));
+  transform: rotateY(90deg) translateX(calc(var(--book-depth)/2));
+  z-index: 5;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+
+/* --- Stany Animacji Otwierania Książki --- */
+body.book-intro #book-container { /* Książka na środku, lekko uniesiona */
+  transform: translateZ(0) rotateX(0deg) rotateY(0deg) scale(1.1);
+}
+body.book-opening #book-cover-front {
+  transform: rotateY(-175deg); /* Obrót okładki */
+}
+body.book-opening #book-page1 {
+  transform: rotateY(-178deg);
+}
+body.book-opening #book-page2 {
+  transform: rotateY(-179deg);
+}
+/* Po otwarciu, strona z grą jest z przodu po lewej */
+body.book-open #book-container {
+  transform: translateZ(0) rotateX(0deg) rotateY(0deg) scale(1); /* Książka na wprost */
+}
+body.book-open #book-cover-front { transform: rotateY(-175deg); }
+body.book-open #book-page1 { transform: rotateY(-178deg); }
+body.book-open #book-page2 { transform: rotateY(-179deg); }
+body.book-open #book-page3 {
+    transform: rotateY(0deg) translateZ(calc(var(--cover-thickness) * 1 + 0.3vh)); /* Pozostaje na miejscu */
+    z-index: 10; /* Ważne, aby była na wierzchu po lewej */
+}
+/* Prawa "połówka" książki (wewnętrzna strona okładki + symulacja reszty stron) */
+body.book-open #book-page4 {
+    transform: rotateY(0deg) translateZ(calc(var(--cover-thickness) * 1 + 0.3vh));
+    left: calc(var(--book-width) / 2); /* Przesunięta na prawą stronę */
+    z-index: 9;
+}
+body.book-open #book-cover-back {
+    transform: rotateY(0deg) translateZ(var(--cover-thickness));
+    left: calc(var(--book-width) / 2); /* Przesunięta na prawą stronę */
+    z-index: 8;
+}
+
+
+/* --- Zawartość Gry (po otwarciu książki) --- */
+#actual-game-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0; /* Początkowo ukryta */
+  transition: opacity 0.8s ease-in-out 0.5s; /* Pojawia się po otwarciu stron */
+  position: relative; /* Dla pozycjonowania #mute-btn */
+  background: transparent; /* Tło zapewnia .book-page */
+}
+body.game-active #actual-game-content {
+  opacity: 1;
+}
+
+#main-game {
+  flex-grow: 1; /* Zajmuje dostępną przestrzeń */
+  overflow-y: auto;
+  padding: 25px;
+  border: none; /* Usunięta ramka, bo jest na stronie książki */
+  background-color: transparent; /* Tło z .book-page */
+  position: relative;
+  color: var(--color-text-darker);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-dark) transparent;
+}
+#main-game::-webkit-scrollbar { width: 8px; }
+#main-game::-webkit-scrollbar-track { background: transparent; }
+#main-game::-webkit-scrollbar-thumb { background-color: var(--color-accent-dark); border-radius: 4px; border: 2px solid transparent; }
+
+#main-game::after { /* Usunięte, bo tła scen są teraz na innym elemencie */
+  content: none;
+}
+/* Tła scen (przykładowe, musisz dostosować do swoich obrazów i logiki gry) */
+.scene-background-container { /* Nowy kontener na tła scen, jeśli potrzebne */
+    position: absolute; top:0; left:0; width:100%; height:100%; z-index:-1;
+    background-size: cover; background-position: center;
+    transition: opacity 0.8s ease-in-out; opacity: 0;
+}
+.scene-background-container.active { opacity: 1; }
+
+.tlo1 { background-image: url(img/wersja1.jpg); }
+.tlo2 { background-image: url(img/3.jpg); }
+.tlo-salon { background-image: url(img/salon.jpeg); }
+/* etc. */
+
+
+#choices {
+  height: auto; /* Dopasowuje się do zawartości */
+  min-height: 20vh; /* Minimalna wysokość */
+  background-color: rgba(0,0,0,0.1); /* Lekkie przyciemnienie obszaru wyborów */
+  border-top: 2px dashed var(--color-accent-dark); /* Linia oddzielająca */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px; /* Odstęp między przyciskami */
+}
+
+#main-game p {
+  font-size: 1.1em;
+  line-height: 1.7;
+  margin-bottom: 1.2em;
+  padding-left: 15px;
+  border-left: 3px solid var(--color-accent);
+  opacity: 0; /* Do animacji pojawiania się */
+  transform: translateX(-20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+#main-game p.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .tytul {
+  font-family: var(--font-primary);
   text-align: center;
-  font-size: 2rem;
-  border: none;
+  font-size: 2em;
+  color: var(--color-text-darker);
+  margin-bottom: 0.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-accent-dark);
+  font-weight: 600;
 }
-h1 {
+
+h1#title { /* Tytuł gry wewnątrz #actual-game-content */
+  font-family: var(--font-primary);
   text-align: center;
+  color: var(--color-text-darker);
+  font-size: 1.8em;
+  margin: 10px 0 15px 0;
+  font-weight: 600;
+}
+
+button {
+  padding: 12px 25px;
+  background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-dark));
+  color: white; /* Lepszy kontrast na gradiencie */
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2), inset 0 -2px 0px rgba(0,0,0,0.15);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+button:hover {
+  background: linear-gradient(to bottom, var(--color-accent-dark), var(--color-accent));
+  box-shadow: 0 3px 7px rgba(0,0,0,0.3), inset 0 -1px 0px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0px rgba(0,0,0,0.15);
 }
 
 #mute-btn {
-margin-bottom: 10px;
-border:solid 3px black
+  position: absolute;
+  top: 20px;
+  right: 25px; /* Dostosuj pozycję */
+  background: transparent;
+  border: 1px solid var(--color-accent-dark);
+  color: var(--color-accent-dark);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 1.5em; /* Dla ikony w span */
+  box-shadow: none;
+  text-shadow: none;
+}
+#mute-btn .icon-placeholder { display: inline-block; line-height: 40px; }
+#mute-btn:hover { background: rgba(0,0,0,0.1); }
+#mute-btn.cisza { color: var(--color-accent); border-color: var(--color-accent); }
 
 
+/* --- Timer (jeśli używany) --- */
+#timer-container {
+  height: 10px;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+#timer-bar {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: 5px;
+  transition: width 0.1s linear;
 }
 
-.cisza{
-  background-color: transparent;
-  border:solid 3px var(--sec) !important;
-  color: white;
+/* --- Efekty Cząsteczkowe (Canvas) --- */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Pod wszystkim, ale nad tłem body */
+  pointer-events: none; /* Aby nie blokował interakcji */
+}
+
+/* --- Animacja tekstu bardziej szczegółowa --- */
+.char-animated {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px) rotateX(20deg) scale(0.8);
+  animation: charAppear 0.3s forwards;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efekt "sprężynki" */
+}
+@keyframes charAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
 }

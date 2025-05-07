@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <title>Dziady CZ.3a</title>
+    <title>Dziady Cz. 3: Wielka Improwizacja</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-  </head>
+    </head>
+<body class="loading-book"> <div id="book-loading-overlay">
+        <div class="spinner"></div>
+        <p>Przygotowuję księgę...</p>
+    </div>
 
-  <body>
-    <h1 id="title">Dziady CZ 3</h1>
-    <button id="mute-btn">Wycisz Dźwięk</button>
+    <div id="book-environment">
+        <div id="book-container">
+            <div id="book">
+                <div id="book-cover-front" class="book-panel">
+                    <div class="cover-art">
+                        <span class="cover-title-main">Dziady</span>
+                        <span class="cover-title-subtitle">Część III</span>
+                        <span class="cover-title-author">Adam Mickiewicz</span>
+                        <div class="cover-decoration top-left"></div>
+                        <div class="cover-decoration top-right"></div>
+                        <div class="cover-decoration bottom-left"></div>
+                        <div class="cover-decoration bottom-right"></div>
+                        <div class="spine-simulation"></div>
+                    </div>
+                </div>
+                <div id="book-page1" class="book-panel book-page">
+                    <div class="page-content">
+                        <h2>Wielka Improwizacja</h2>
+                        <p class="page-intro-text">"Samotność — cóż po ludziach, czym śpiewak dla ludzi?..."</p>
+                    </div>
+                </div>
+                <div id="book-page2" class="book-panel book-page">
+                     <div class="page-content">
+                        </div>
+                </div>
+                <div id="book-page3" class="book-panel book-page">
+                     <div class="page-content">
+                        <div id="actual-game-content">
+                            <h1 id="title">Dziady CZ 3</h1>
+                            <button id="mute-btn" aria-label="Wycisz/Włącz dźwięk">
+                                <span class="icon-placeholder">🔊</span> </button>
+                            <section id="main-game"></section>
+                            <section id="bottomq">
+                                <div id="choices"></div>
+                                <div id="timer-container">
+                                    <div id="timer-bar"></div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div id="book-page4" class="book-panel book-page"></div> <div id="book-cover-back" class="book-panel">
+                     <div class="cover-art-back"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <section id="main-game"></section>
-    <section id="bottomq"><div id="choices"></div><div id="timer"></div></section>
-    <script src="tekst.js"></script>
+    <canvas id="particle-canvas"></canvas> <script src="tekst.js"></script>
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
