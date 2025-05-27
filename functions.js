@@ -1,0 +1,95 @@
+let a = 0;
+async function wybor(scene) {
+  const okno_wyboru = document.getElementById("choices");
+  okno_wyboru.innerHTML = "";
+  gameState.currentScene = scene;
+  let sceneText = tekst[scene];
+
+  return new Promise(function (resolve) {
+    for (let i = 0; i < sceneText.length; i++) {
+      let przycisk = document.createElement("button");
+      przycisk.id = "scene-choice-" + scene + "-" + i;
+      przycisk.classList.add("scene-button");
+      przycisk.textContent = sceneText[i];
+
+      (function (numer) {
+        przycisk.addEventListener("click", function () {
+          resolve(numer);
+        });
+      })(i + 1);
+
+      okno_wyboru.appendChild(przycisk);
+    }
+  });
+}
+
+async function wtekst(scene) {
+  const okno_tekstu = document.getElementById("main-game");
+  const okno_wyboru = document.getElementById("choices");
+  okno_wyboru.innerHTML = "";
+  let but = document.createElement("button");
+  but.id = `test`;
+  but.innerText = "dalej";
+  gameState.currentScene = scene;
+  okno_wyboru.appendChild(but);
+
+  let p = document.createElement("p");
+  p.id = `scene-text-${scene}`;
+  p.classList.add(`scene-text-${a}`);
+
+  let sceneText = tekst[gameState.currentScene];
+
+  sceneText.forEach(function (line) {
+    p.appendChild(document.createTextNode(line));
+    p.appendChild(document.createElement("br"));
+    p.appendChild(document.createElement("br"));
+  });
+
+  okno_tekstu.appendChild(p);
+  console.log(a++);
+  console.log(scene);
+  okno_tekstu.scrollTop = okno_tekstu.scrollHeight;
+  await czekajNaKlikniecie("test");
+}
+
+async function title(tytul) {
+  const okno_tekstu = document.getElementById("main-game");
+  okno_tekstu.innerHTML = "";
+  let p = document.createElement("p");
+  p.classList.add("tytul");
+  p.innerHTML = tytul;
+  okno_tekstu.appendChild(p);
+  await czekajNaKlikniecie("test");
+}
+
+function czekajNaKlikniecie(idPrzycisku) {
+  return new Promise(function (resolve) {
+    document.getElementById(idPrzycisku).addEventListener(
+      "click",
+      function () {
+        resolve();
+      },
+      { once: true }
+    );
+  });
+}
+
+document.getElementById("mute-btn").addEventListener("click", () => {
+  isCicho = !isCicho;
+  grajace.forEach(function (audio) {
+    audio.muted = isCicho;
+  });
+
+  const muteButton = document.getElementById("mute-btn");
+  if (isCicho) {
+    muteButton.textContent = "Włącz Dźwięk";
+    muteButton.classList.add("cisza");
+  } else {
+    muteButton.textContent = "Wycisz Dźwięk";
+    muteButton.classList.remove("cisza");
+  }
+});
+
+function timer (){
+  getElementById("timer-bar")
+}
