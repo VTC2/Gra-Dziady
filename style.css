@@ -11,8 +11,8 @@ body {
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 #main-game {
@@ -44,27 +44,33 @@ body::after {
   position: fixed;
 
 }
+
 .tlo-escape::after {
   background-image: url();
 }
+
 .tlo2::after {
   background-image: url(img/3.jpg);
   background-attachment: fixed;
   position: fixed;
 }
+
 .tlo-salon::after {
   filter: blur(12px) brightness(0.5) saturate(0.9) !important;
   background-image: url(img/salon.jpeg);
 
   background-position-y: -500px;
 }
+
 .tlo-widzenie::after {
   background-image: url(img/widzenie.png);
 }
+
 .tlo-bal::after {
   background-image: url(img/bal.png);
   filter: blur(12px) brightness(0.5) saturate(0.9) !important;
 }
+
 #choices button {
   background-color: #222;
   color: #eee;
@@ -97,6 +103,7 @@ p {
   font-size: 2rem;
   border: none;
 }
+
 h1 {
   text-align: center;
   font-family: 'MedievalSharp', cursive;
@@ -111,13 +118,15 @@ h2 {
   color: #eee;
   text-shadow: 0 0 6px white, 0 0 12px rgba(255, 255, 255, 0.5);
 }
-#avatar{
+
+#avatar {
   position: fixed;
   bottom: 0px;
   right: 0px;
   width: 300px;
   height: auto;
 }
+
 #mute-btn {
   position: fixed;
   bottom: 300px;
@@ -141,8 +150,8 @@ h2 {
   transform: scale(1.05);
 }
 
-.cisza{
+.cisza {
   background-color: transparent;
-  border:solid 3px var(--sec) !important;
+  border: solid 3px var(--sec) !important;
   color: white;
 }

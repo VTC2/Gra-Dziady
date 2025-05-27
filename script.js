@@ -288,4 +288,3 @@ async function end() {
   await title("KONIEC");
   await wtekst("scena6_6");
 }
-
