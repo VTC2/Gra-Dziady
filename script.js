@@ -10,23 +10,17 @@ let konrad = {
 
 let grajace = [];
 let isCicho = false;
-startGame();
+
+document.addEventListener("DOMContentLoaded", startGame);
 
 async function startGame() {
-
-
   const okno_gry = document.getElementById("body");
   await wtekst("prolog");
   await title("Oprawa dźwiekowa i graficzna jest nieskończona.");
   await title("WIĘZIENIE W WILNIE");
 
   okno_gry.classList.add("tlo1");
-  let celao = new Audio("audio/cela.wav");
-  if (isCicho) {
-    celao.muted = true;
-  }
-  celao.play();
-  grajace.push(celao);
+  let celao = playSound("audio/cela.wav");
 
   await wtekst("scena1_1");
   let ac = await wybor("scena1_2x");
@@ -61,13 +55,7 @@ async function startGame() {
     switch (death) {
       case 1:
         await wtekst("scena1_4a");
-        let strzal = new Audio("audio/shoot.wav");
-        if (isCicho) {
-          strzal.muted = true;
-        }
-        strzal.play();
-        grajace.push(strzal);
-
+        let strzal = playSound("audio/shoot.wav");
         console.log(strzal.currentTime);
         await wtekst("scena1_4a_5");
         return await end();
@@ -128,18 +116,11 @@ async function startGame() {
         }
     }
   }
-  celao.pause();
-  celao.currentTime = 0;
-  grajace = grajace.filter((audio) => audio !== celao); 
+  stopSound(celao);
   celao = null;
-  let impro = new Audio("audio/pw.wav");
-  if (isCicho) {
-    impro.muted = true;
-  }
-  impro.play();
-  grajace.push(impro);
+  let impro = playSound("audio/pw.wav");
 
-  await wtekst("scena2_1"); // imporiwzacja
+  await wtekst("scena2_1"); // improwizacja
   let imp = await wybor("scena2_2x");
   let late_imp;
   switch (imp) {
@@ -166,20 +147,13 @@ async function startGame() {
       konrad.mist++;
       break;
   }
-  impro.pause();
-  impro.currentTime = 0;
-  grajace = grajace.filter((audio) => audio !== impro);
+  stopSound(impro);
   impro = null;
 
   okno_gry.classList.remove("tlo2");
   await title("SALON WARSZAWSKI");
   okno_gry.classList.add("tlo-salon");
-  let salo = new Audio("audio/salon.wav");
-  if (isCicho) {
-    salo.muted = true;
-  }
-  salo.play();
-  grajace.push(salo);
+  let salo = playSound("audio/salon.wav");
 
   await wtekst("scena3_1");
   let join = await wybor("scena3_2x");
@@ -221,9 +195,7 @@ async function startGame() {
         break;
     }
   }
-  salo.pause();
-  salo.currentTime = 0;
-  grajace = grajace.filter((audio) => audio !== salo);
+  stopSound(salo);
   salo = null;
   okno_gry.classList.remove("tlo-salon");
   await title("WIDZENIE KSIĘDZA PIOTRA");
@@ -262,13 +234,7 @@ async function startGame() {
   okno_gry.classList.remove("tlo-widzenie");
   await title("BAL U SENATORA");
   console.log("dziewk");
-  let balo = new Audio("audio/bal.mov");
-  if (isCicho) {
-    balo.muted = true;
-  }
-  balo.play();
-  grajace.push(balo);
-
+  let balo = playSound("audio/bal.mov");
   okno_gry.classList.add("tlo-bal");
   await wtekst("scena5_1");
 
@@ -300,11 +266,7 @@ async function startGame() {
         break;
     }
   }
-  balo.pause();
-  balo.currentTime = 0;
-  grajace = grajace.filter(function (audio) {
-    return audio !== balo;
-  });
+  stopSound(balo);
   balo = null;
   okno_gry.classList.remove("tlo-bal");
   await title("EPILOG");

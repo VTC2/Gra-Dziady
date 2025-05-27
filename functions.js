@@ -1,3 +1,4 @@
+let gameState = { currentScene: null }; 
 let a = 0;
 async function wybor(scene) {
   const okno_wyboru = document.getElementById("choices");
@@ -92,4 +93,23 @@ document.getElementById("mute-btn").addEventListener("click", () => {
 
 function timer (){
   getElementById("timer-bar")
+}
+
+function playSound(src) 
+{
+  let audio = new Audio(src);
+  if (isCicho) {
+    audio.muted = true;
+  }
+  audio.play();
+  grajace.push(audio);
+  return audio;
+}
+
+function stopSound(audio) 
+{
+  if (!audio) return;
+  audio.pause();
+  audio.currentTime = 0;
+  grajace = grajace.filter((a) => a !== audio);
 }
