@@ -1,6 +1,6 @@
 * {
   --sec: #dcdcdc;
-  --comp: #95A2E8;
+  --comp: #95a2e8;
 }
 
 body {
@@ -42,7 +42,6 @@ body::after {
   background-image: url(img/wersja1.jpg);
   background-attachment: fixed;
   position: fixed;
-
 }
 
 .tlo-escape::after {
@@ -74,8 +73,8 @@ body::after {
 #choices button {
   background-color: #222;
   color: #eee;
-  font-family: Georgia, 'Times New Roman';
-  font-size: 1.0em;
+  font-family: Georgia, "Times New Roman";
+  font-size: 1em;
   padding: 12px 20px;
   border: 2px solid #555;
   border-radius: 8px;
@@ -91,7 +90,6 @@ body::after {
   transform: scale(1.05);
 }
 
-
 p {
   border-left: solid 5px var(--sec);
   border-radius: 13px;
@@ -106,7 +104,7 @@ p {
 
 h1 {
   text-align: center;
-  font-family: 'MedievalSharp', cursive;
+  font-family: "MedievalSharp", cursive;
   font-size: 3em;
   color: #eee;
   text-shadow: 0 0 6px white, 0 0 12px rgba(255, 255, 255, 0.5);
@@ -114,7 +112,7 @@ h1 {
 
 h2 {
   text-align: center;
-  font-family: 'MedievalSharp', cursive;
+  font-family: "MedievalSharp", cursive;
   color: #eee;
   text-shadow: 0 0 6px white, 0 0 12px rgba(255, 255, 255, 0.5);
 }
@@ -126,17 +124,17 @@ h2 {
   width: 200px;
   max-width: 200px;
   height: auto;
-  border:solid 5px #b8b16c;
+  border: solid 5px #b8b16c;
   border-radius: 2px;
 }
 
 #mute-btn {
   position: fixed;
-  top:0px;
+  top: 0px;
   right: 0px;
   background-color: #222;
   color: #eee;
-  font-family: 'MedievalSgharp', cursive;
+  font-family: "MedievalSgharp", cursive;
   font-size: 0.8em;
   padding: 3px;
   margin: 30px;
@@ -158,4 +156,23 @@ h2 {
   background-color: transparent;
   border: solid 3px var(--sec) !important;
   color: white;
+}
+
+.minigame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  opacity: 1.0;
+  background-color: white;
+   width: 50vw;
+  height: 50vh;
+}
+
+.minigame-wrap {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5); /* only background is transparent */
+  z-index: 2;
 }

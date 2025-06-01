@@ -111,3 +111,18 @@ function stopSound(audio) {
   audio.currentTime = 0;
   grajace = grajace.filter((a) => a !== audio);
 }
+
+function minigame() {
+  let miniwrap = document.createElement("div");
+  miniwrap.classList.add("minigame-wrap");
+  document.body.appendChild(miniwrap);
+  let mini = document.createElement("div");
+  mini.classList.add("minigame");
+  miniwrap.appendChild(mini);
+  let complete = document.createElement("button");
+  complete.textContent = "Zakończ minigame";
+  mini.appendChild(complete);
+  complete.addEventListener("click", function () {
+    miniwrap.remove();
+  });
+}

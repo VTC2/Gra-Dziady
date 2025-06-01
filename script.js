@@ -14,6 +14,7 @@ let isCicho = false;
 document.addEventListener("DOMContentLoaded", startGame);
 
 async function startGame() {
+  minigame();
   const avatar = document.getElementById("avatar");
   const okno_gry = document.getElementById("body");
   await wtekst("prolog");
@@ -214,6 +215,7 @@ async function startGame() {
       break;
 
     case 2:
+      avatar.src="img/rewolucjonista.png"
       await wtekst("scena4_2b");
       konrad.rew = true;
       break;
@@ -277,6 +279,7 @@ async function startGame() {
   } else if (konrad.duch_przew) {
     await wtekst("scena6_2");
   } else if (konrad.mist >= 3) {
+    avatar.src="img/sus.png"
     await wtekst("scena6_4");
   } else if (konrad.rew) {
     await wtekst("scena6_3");
@@ -290,3 +293,4 @@ async function end() {
   await title("KONIEC");
   await wtekst("scena6_6");
 }
+
