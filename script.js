@@ -14,6 +14,7 @@ let isCicho = false;
 document.addEventListener("DOMContentLoaded", startGame);
 
 async function startGame() {
+  const avatar = document.getElementById("avatar");
   const okno_gry = document.getElementById("body");
   await wtekst("prolog");
   await title("Oprawa dźwiekowa i graficzna jest nieskończona.");
@@ -209,6 +210,7 @@ async function startGame() {
       await wtekst("scena4_2a");
       konrad.duch_przew = true;
       konrad.rew = false;
+      avatar.src="img/wierzacy.png"
       break;
 
     case 2:
