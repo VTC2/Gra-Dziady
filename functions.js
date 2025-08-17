@@ -1,5 +1,5 @@
 async function wybor(scene) {
-  const okno_wyboru = document.getElementById("choices");
+  const okno_wyboru = document.getElementById("wybory");
   okno_wyboru.innerHTML = "";
   gameState.currentScene = scene;
   let sceneText = tekst[scene];
@@ -14,6 +14,7 @@ async function wybor(scene) {
       (function (numer) {
         przycisk.addEventListener("click", function () {
           resolve(numer);
+          
         });
       })(i + 1);
 

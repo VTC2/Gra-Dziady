@@ -18,7 +18,7 @@ let dalej = $("<button>", {
     text: `stasdasdrona : ${$("#flipbook").turn("page")}`,
   });
   $("#flipbook").turn("addPage", wybory);
-    let ac = await wybor("scena1_2x");
+  console.log("elemnts created");
 
 
 
@@ -27,6 +27,33 @@ let dalej = $("<button>", {
 await wtekst("prolog");
 element.find("p").remove();
 await wtekst("scena1_1");
+let ac = await wybor("scena1_2x");
+
+  $("#flipbook").turn("addPage", element);
+  $("#flipbook").turn("addPage", wybory);
+
+switch (
+    ac //pierwszy wybor
+  ) {
+    case 1:
+        nastepna();
+
+      await wtekst("scena1_2a");
+      konrad.inmate_trust = true;
+      break;
+
+    case 2:
+        nastepna();
+
+      await wtekst("scena1_2b");
+      konrad.mist++;
+      break;
+
+    case 3:
+      await wtekst("scena1_2c");
+      konrad.inmate_trust = true;
+      break;
+  }
 
 
 
@@ -35,9 +62,15 @@ function nastepna() {
   console.log("Next page");
   $("#flipbook").turn("disable", false);
   $("#flipbook").turn("next");
+  setTimeout(() => {
+    console.log("Waited for 5 seconds");
+}, 5000);
   $("#flipbook").turn("disable", true);
 }
 
+async function dodajRozdzial(scene){
+  // tu przeniose logike tworzrenia stron bo wczesniejsza inplmentacja nie potrzevbnie bazuje na poprzedniej wersji aplikacja z jednym oknem co komplikuje kod
+}
 async function wtekst(scene) {
     
   const okno_tekstu = document.getElementById("main-game");
