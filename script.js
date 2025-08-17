@@ -2,23 +2,11 @@ let gameState = { currentScene: null };
 let a = 0;
 
 async function startGame() {
-  console.log("Starting game");
-  let element = $("<div>", {
-    id: "main-game",
-    text:"",  
-  });
-  $("#flipbook").turn("addPage", element);
-let dalej = $("<button>", {
-    id: "dalej",
-    text: "Dalej",
-  }).on("click",nastepna);
-  element.append(dalej);
-  let wybory = $("<div>", {
-    id: "wybory",
-    text: `stasdasdrona : ${$("#flipbook").turn("page")}`,
-  });
-  $("#flipbook").turn("addPage", wybory);
-  console.log("elemnts created");
+
+  await dodajRozdzial("prolog");
+  console.log("dodano");
+  
+
 
 
 
@@ -68,12 +56,38 @@ function nastepna() {
   $("#flipbook").turn("disable", true);
 }
 
-async function dodajRozdzial(scene){
+async function dodajRozdzial(scene, wyborscene=false){
   // tu przeniose logike tworzrenia stron bo wczesniejsza inplmentacja nie potrzevbnie bazuje na poprzedniej wersji aplikacja z jednym oknem co komplikuje kod
+  let lewa = $("<div>", {
+    id: `tekst${scene}`,
+    text:"sdsds",  
+  });
+  let dalej = $("<button>", {
+    id: `dalej${scene}`,
+    text: "Dalej",  
+  });
+  lewa.append(dalej);
+  let wybory = $("<div>", {
+    id: `wybory${scene}`,
+    text: `wybor : ${$("#flipbook").turn("page")}`,
+  });
+  if (!wyborscene) {
+    let defultDalej = $("<button>", {
+    id: `dalej${scene}`,
+    text: "Dalej",  
+  });
+  wybory.append(defultDalej);
+  }
+
+  $("#flipbook").turn("addPage", lewa);
+  $("#flipbook").turn("addPage", wybory);
+  console.log("elemnts created");
+  await wtekst(scene);
+
 }
 async function wtekst(scene) {
     
-  const okno_tekstu = document.getElementById("main-game");
+  const okno_tekstu = document.getElementById(`tekst${scene}`);
     
 
   // const okno_wyboru = document.getElementById("choices");
@@ -99,7 +113,7 @@ async function wtekst(scene) {
 
   okno_tekstu.appendChild(p);
   console.log(scene);
-  await czekajNaKlikniecie("dalej");
+  await czekajNaKlikniecie(`wybory${scene}`);
 }
 function czekajNaKlikniecie(idPrzycisku) {
   return new Promise(function (resolve) {
