@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 "use strict";
 
 let gameState = {
@@ -46,18 +47,41 @@ async function startGame() {
       await wtekst("scena1_2a", 4);
       konrad.inmate_trust = true;
       break;
+=======
+let gameState = { currentScene: null };
+let a = 0;
 
-    case 2:
-      await wtekst("scena1_2b");
-      konrad.mist++;
-      break;
+async function startGame() {
+  console.log("Starting game");
+  let element = $("<div>", {
+    id: "main-game",
+    text:"",  
+  });
+  $("#flipbook").turn("addPage", element);
+let dalej = $("<button>", {
+    id: "dalej",
+    text: "Dalej",
+  }).on("click",nastepna);
+  element.append(dalej);
+  let wybory = $("<div>", {
+    id: "wybory",
+    text: `stasdasdrona : ${$("#flipbook").turn("page")}`,
+  });
+  $("#flipbook").turn("addPage", wybory);
+    let ac = await wybor("scena1_2x");
 
-    case 3:
-      await wtekst("scena1_2c");
-      konrad.inmate_trust = true;
-      break;
-  }
 
+
+  nastepna();
+  
+await wtekst("prolog");
+element.find("p").remove();
+await wtekst("scena1_1");
+>>>>>>> Stashed changes
+
+
+
+<<<<<<< Updated upstream
   if (konrad.inmate_trust) {
     //ucieczka
     await wtekst("scena1_3");
@@ -325,13 +349,22 @@ async function startGame() {
 
   await wtekst("scena6_5");
   await end();
+=======
+}
+function nastepna() {
+  console.log("Next page");
+  $("#flipbook").turn("disable", false);
+  $("#flipbook").turn("next");
+  $("#flipbook").turn("disable", true);
+>>>>>>> Stashed changes
 }
 
-async function end() {
-  await title("KONIEC");
-  await wtekst("scena6_6");
-}
+async function wtekst(scene) {
+    
+  const okno_tekstu = document.getElementById("main-game");
+    
 
+<<<<<<< Updated upstream
 async function wybor(scene) {
   const okno_wyboru = document.getElementById("choices");
   okno_wyboru.innerHTML = "";
@@ -438,6 +471,16 @@ async function wtekst(scene) {
   but.innerText = "dalej";
   gameState.currentScene = scene;
   okno_wyboru.appendChild(but);
+=======
+  // const okno_wyboru = document.getElementById("choices");
+  // okno_wyboru.innerHTML = "";
+
+  // let but = document.createElement("button");
+  // but.id = `test`;
+  // but.innerText = "dalej";
+  gameState.currentScene = scene;
+  // okno_wyboru.appendChild(but);
+>>>>>>> Stashed changes
 
   let p = document.createElement("p");
   p.id = `scene-text-${scene}`;
@@ -452,6 +495,7 @@ async function wtekst(scene) {
   });
 
   okno_tekstu.appendChild(p);
+<<<<<<< Updated upstream
   console.log(a++);
   console.log(scene);
   okno_tekstu.scrollTop = okno_tekstu.scrollHeight;
@@ -468,6 +512,11 @@ async function title(tytul) {
   await czekajNaKlikniecie("test");
 }
 
+=======
+  console.log(scene);
+  await czekajNaKlikniecie("dalej");
+}
+>>>>>>> Stashed changes
 function czekajNaKlikniecie(idPrzycisku) {
   return new Promise(function (resolve) {
     document.getElementById(idPrzycisku).addEventListener(
@@ -479,6 +528,7 @@ function czekajNaKlikniecie(idPrzycisku) {
     );
   });
 }
+<<<<<<< Updated upstream
 
 document.getElementById("mute-btn").addEventListener("click", () => {
   isCicho = !isCicho;
@@ -495,3 +545,24 @@ document.getElementById("mute-btn").addEventListener("click", () => {
     muteButton.classList.remove("cisza");
   }
 });
+=======
+  // document.addEventListener("DOMContentLoaded", startGame);
+// $('#flipbook').on('turning',
+// 	function(event, page, obj){
+
+//     document.querySelector(`div[page="${page}"]`).innerText = page;
+//   });
+// async function startGame() {
+// console.log("Starting game");
+// let element = $("<div>", {
+//     class: "main-game",
+//     text: `asdsada`
+// });  $("#flipbook").turn("addPage", element);
+//     element = $("<div> ewffdsdfs </div>", { class: "main-game" });
+//   await title("Prolog");
+//   await wtekst("prolog");
+//   $("#flipbook").turn("disable", true);
+//   await title("WIĘZIENIE W WILNIE");
+//   console.log("Game started");
+// }
+>>>>>>> Stashed changes
