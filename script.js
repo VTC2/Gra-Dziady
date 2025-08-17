@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 "use strict";
 
 let gameState = {
@@ -350,12 +351,49 @@ await wtekst("scena1_1");
   await wtekst("scena6_5");
   await end();
 =======
+=======
+let gameState = { currentScene: null };
+let a = 0;
+
+async function startGame() {
+  console.log("Starting game");
+  let element = $("<div>", {
+    id: "main-game",
+    text:"",  
+  });
+  $("#flipbook").turn("addPage", element);
+let dalej = $("<button>", {
+    id: "dalej",
+    text: "Dalej",
+  }).on("click",nastepna);
+  element.append(dalej);
+  let wybory = $("<div>", {
+    id: "wybory",
+    text: `stasdasdrona : ${$("#flipbook").turn("page")}`,
+  });
+  $("#flipbook").turn("addPage", wybory);
+    let ac = await wybor("scena1_2x");
+
+
+
+  nastepna();
+  
+await wtekst("prolog");
+element.find("p").remove();
+await wtekst("scena1_1");
+
+
+
+>>>>>>> Stashed changes
 }
 function nastepna() {
   console.log("Next page");
   $("#flipbook").turn("disable", false);
   $("#flipbook").turn("next");
   $("#flipbook").turn("disable", true);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
 
@@ -363,6 +401,7 @@ async function wtekst(scene) {
     
   const okno_tekstu = document.getElementById("main-game");
     
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
 async function wybor(scene) {
@@ -472,6 +511,9 @@ async function wtekst(scene) {
   gameState.currentScene = scene;
   okno_wyboru.appendChild(but);
 =======
+=======
+
+>>>>>>> Stashed changes
   // const okno_wyboru = document.getElementById("choices");
   // okno_wyboru.innerHTML = "";
 
@@ -480,6 +522,9 @@ async function wtekst(scene) {
   // but.innerText = "dalej";
   gameState.currentScene = scene;
   // okno_wyboru.appendChild(but);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   let p = document.createElement("p");
@@ -495,6 +540,7 @@ async function wtekst(scene) {
   });
 
   okno_tekstu.appendChild(p);
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   console.log(a++);
   console.log(scene);
@@ -517,6 +563,11 @@ async function title(tytul) {
   await czekajNaKlikniecie("dalej");
 }
 >>>>>>> Stashed changes
+=======
+  console.log(scene);
+  await czekajNaKlikniecie("dalej");
+}
+>>>>>>> Stashed changes
 function czekajNaKlikniecie(idPrzycisku) {
   return new Promise(function (resolve) {
     document.getElementById(idPrzycisku).addEventListener(
@@ -528,6 +579,7 @@ function czekajNaKlikniecie(idPrzycisku) {
     );
   });
 }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
 document.getElementById("mute-btn").addEventListener("click", () => {
@@ -546,6 +598,8 @@ document.getElementById("mute-btn").addEventListener("click", () => {
   }
 });
 =======
+=======
+>>>>>>> Stashed changes
   // document.addEventListener("DOMContentLoaded", startGame);
 // $('#flipbook').on('turning',
 // 	function(event, page, obj){
@@ -565,4 +619,7 @@ document.getElementById("mute-btn").addEventListener("click", () => {
 //   await title("WIĘZIENIE W WILNIE");
 //   console.log("Game started");
 // }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
