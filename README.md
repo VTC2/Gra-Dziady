@@ -10,3 +10,7 @@ TODO:
 9) AI premium (jaki?, kosztorys)
 10) umieszczenie na serwerze
 11) Aplikacja na telefon
+
+##########
+
+używane biblioteki, jQuery, turn.js
