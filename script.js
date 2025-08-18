@@ -2,36 +2,28 @@ let gameState = { currentScene: null };
 let a = 0;
 
 async function startGame() {
+  console.log("start");
+  await dodajRozdzial("prolog",'Prolog',false);
+  console.log("dodano prolog");
 
-  await dodajRozdzial("prolog");
-  console.log("dodano");
-  
-
-
-
-
-  nastepna();
-  
-await wtekst("prolog");
-element.find("p").remove();
-await wtekst("scena1_1");
-let ac = await wybor("scena1_2x");
+  await dodajRozdzial("scena1_1", 'więzienie w Wilnie');
+  let ac = await wybor("scena1_2x");
 
   $("#flipbook").turn("addPage", element);
   $("#flipbook").turn("addPage", wybory);
 
-switch (
+  switch (
     ac //pierwszy wybor
   ) {
     case 1:
-        nastepna();
+      nastepna();
 
       await wtekst("scena1_2a");
       konrad.inmate_trust = true;
       break;
 
     case 2:
-        nastepna();
+      nastepna();
 
       await wtekst("scena1_2b");
       konrad.mist++;
@@ -42,53 +34,56 @@ switch (
       konrad.inmate_trust = true;
       break;
   }
-
-
-
 }
 function nastepna() {
   console.log("Next page");
   $("#flipbook").turn("disable", false);
   $("#flipbook").turn("next");
-  setTimeout(() => {
-    console.log("Waited for 5 seconds");
-}, 5000);
+  setTimeout(function () {
+    console.log("minelo 5s");
+  }, 5000);
+  
   $("#flipbook").turn("disable", true);
 }
 
-async function dodajRozdzial(scene, wyborscene=false){
+async function dodajRozdzial(scene, rozdzal, wyborscene = false) {
   // tu przeniose logike tworzrenia stron bo wczesniejsza inplmentacja nie potrzevbnie bazuje na poprzedniej wersji aplikacja z jednym oknem co komplikuje kod
   let lewa = $("<div>", {
     id: `tekst${scene}`,
-    text:"sdsds",  
   });
-  let dalej = $("<button>", {
+  let title = $("<h2>", {
+    class: "tytul",
+    text:  rozdzal,
+  });
+  lewa.append(title);
+   if (false ){let dalej = $("<button>", {
     id: `dalej${scene}`,
-    text: "Dalej",  
+    text: "Dalej tekst",
   });
   lewa.append(dalej);
+}
   let wybory = $("<div>", {
     id: `wybory${scene}`,
     text: `wybor : ${$("#flipbook").turn("page")}`,
   });
   if (!wyborscene) {
     let defultDalej = $("<button>", {
-    id: `dalej${scene}`,
-    text: "Dalej",  
-  });
-  wybory.append(defultDalej);
+     id: `dalej${scene}`,
+    text: "Dalej wybory",
+    });
+     wybory.append(defultDalej);
   }
+  
 
   $("#flipbook").turn("addPage", lewa);
+
   $("#flipbook").turn("addPage", wybory);
+  nastepna()
   console.log("elemnts created");
   await wtekst(scene);
-
 }
 async function wtekst(scene) {
-    
   const okno_tekstu = document.getElementById(`tekst${scene}`);
-    
 
   // const okno_wyboru = document.getElementById("choices");
   // okno_wyboru.innerHTML = "";
@@ -126,22 +121,3 @@ function czekajNaKlikniecie(idPrzycisku) {
     );
   });
 }
-  // document.addEventListener("DOMContentLoaded", startGame);
-// $('#flipbook').on('turning',
-// 	function(event, page, obj){
-
-//     document.querySelector(`div[page="${page}"]`).innerText = page;
-//   });
-// async function startGame() {
-// console.log("Starting game");
-// let element = $("<div>", {
-//     class: "main-game",
-//     text: `asdsada`
-// });  $("#flipbook").turn("addPage", element);
-//     element = $("<div> ewffdsdfs </div>", { class: "main-game" });
-//   await title("Prolog");
-//   await wtekst("prolog");
-//   $("#flipbook").turn("disable", true);
-//   await title("WIĘZIENIE W WILNIE");
-//   console.log("Game started");
-// }
