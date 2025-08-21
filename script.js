@@ -1,36 +1,45 @@
 let gameState = { currentScene: null };
 let a = 0;
-
+let konrad = {
+  mist: 0,
+  rew: true,
+  bal_inba: false,
+  inmate_trust: false,
+  duch_przew: false,
+};
 async function startGame() {
   console.log("start");
-  await dodajRozdzial("prolog",'Prolog',false);
+  await dodajRozdzial("prolog", "Prolog", false);
   console.log("dodano prolog");
 
-  await dodajRozdzial("scena1_1", 'więzienie w Wilnie');
-  let ac = await wybor("scena1_2x");
-
-  $("#flipbook").turn("addPage", element);
-  $("#flipbook").turn("addPage", wybory);
+  let ac = await dodajRozdzial("scena1_1", "więzienie w Wilnie", "scena1_2x");
+console.log(`ac: ${ac}`);
 
   switch (
     ac //pierwszy wybor
   ) {
     case 1:
+      console.log("wybrano 1");
+
       nastepna();
 
-      await wtekst("scena1_2a");
+      // await wtekst("scena1_2a");
       konrad.inmate_trust = true;
       break;
 
     case 2:
+      console.log("wybrano 1");
+
       nastepna();
 
-      await wtekst("scena1_2b");
+      // await wtekst("scena1_2b");
       konrad.mist++;
       break;
 
     case 3:
-      await wtekst("scena1_2c");
+      console.log("wybrano 1");
+
+      //  await wtekst("scena1_2c");
       konrad.inmate_trust = true;
       break;
   }
@@ -42,7 +51,7 @@ function nastepna() {
   setTimeout(function () {
     console.log("minelo 5s");
   }, 5000);
-  
+
   $("#flipbook").turn("disable", true);
 }
 
@@ -53,35 +62,58 @@ async function dodajRozdzial(scene, rozdzal, wyborscene = false) {
   });
   let title = $("<h2>", {
     class: "tytul",
-    text:  rozdzal,
+    text: rozdzal,
   });
   lewa.append(title);
-   if (false ){let dalej = $("<button>", {
-    id: `dalej${scene}`,
-    text: "Dalej tekst",
-  });
-  lewa.append(dalej);
-}
+  if (false) {
+    let dalej = $("<button>", {
+      id: `dalej${scene}`,
+      text: "Dalej tekst",
+    });
+    lewa.append(dalej);
+  }
   let wybory = $("<div>", {
     id: `wybory${scene}`,
     text: `wybor : ${$("#flipbook").turn("page")}`,
   });
   if (!wyborscene) {
     let defultDalej = $("<button>", {
-     id: `dalej${scene}`,
-    text: "Dalej wybory",
+      id: `dalej${scene}`,
+      text: "Dalej wybory",
     });
-     wybory.append(defultDalej);
+    wybory.append(defultDalej);
+    console.log("wybor nie jest");
+  } else {
+    gameState.currentScene = scene;
+    console.log("jest");
+
+    for (let i = 0; i < tekst[wyborscene].length; i++) {
+
+      let przycisk = $("<button>", {
+        id: `scene-choice-${wyborscene}-${i}`,
+        class: "scene-button",
+        text: tekst[wyborscene][i],
+      });
+
+      console.log(`scene-choice-${wyborscene}-${i}`);
+      console.log(tekst[wyborscene][i]);
+
+      przycisk.on("click", function () {
+        resolve(i);
+      });
+      wybory.append(przycisk);
+    }
   }
-  
 
   $("#flipbook").turn("addPage", lewa);
 
   $("#flipbook").turn("addPage", wybory);
-  nastepna()
+  nastepna();
   console.log("elemnts created");
   await wtekst(scene);
 }
+
+async function wybor(scene) {}
 async function wtekst(scene) {
   const okno_tekstu = document.getElementById(`tekst${scene}`);
 

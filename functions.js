@@ -5,11 +5,11 @@ async function wybor(scene) {
   let sceneText = tekst[scene];
 
   return new Promise(function (resolve) {
-    for (let i = 0; i < sceneText.length; i++) {
+    for (let i = 0; i < tekst[scene].length; i++) {
       let przycisk = document.createElement("button");
       przycisk.id = "scene-choice-" + scene + "-" + i;
       przycisk.classList.add("scene-button");
-      przycisk.textContent = sceneText[i];
+      przycisk.textContent = tekst[scene][i];
 
       (function (numer) {
         przycisk.addEventListener("click", function () {
