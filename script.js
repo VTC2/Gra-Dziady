@@ -12,7 +12,7 @@ async function startGame() {
   await dodajRozdzial("prolog", "Prolog", false);
   console.log("dodano prolog");
 
-  let ac = await dodajRozdzial("scena1_1", "więzienie w Wilnie", "scena1_2x");
+  let ac = await dodajRozdzial("scena1_1", "Więzienie w Wilnie", "scena1_2x");
 console.log(`ac: ${ac}`);
 
   switch (
@@ -21,25 +21,24 @@ console.log(`ac: ${ac}`);
     case 1:
       console.log("wybrano 1");
 
-      nastepna();
-
+await dodajRozdzial("scena1_2a", "Więzienie w Wilnie", false);
       // await wtekst("scena1_2a");
       konrad.inmate_trust = true;
       break;
 
     case 2:
-      console.log("wybrano 1");
+      console.log("wybrano 2");
 
-      nastepna();
+await dodajRozdzial("scena1_2b", "Więzienie w Wilnie", false);
 
       // await wtekst("scena1_2b");
       konrad.mist++;
       break;
 
     case 3:
-      console.log("wybrano 1");
+      console.log("wybrano 3");
 
-      //  await wtekst("scena1_2c");
+await dodajRozdzial("scena1_2c", "Więzienie w Wilnie", false);
       konrad.inmate_trust = true;
       break;
   }
