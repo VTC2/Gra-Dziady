@@ -1,12 +1,16 @@
-TODO:
-1) usunąć frazy Monolog wewnętrzny
-2) dodanie mini gier, quick time eventy
-3) ewentualnie dodać i poprawić oprawę dźwiękową (przy improwizacji, po ucieczce: trochę przyciszyć)
-4) utworzyć sceny w AI
-5) postać Konrada w rogu, zmieniająca wizerunek
-6) tekst pojawia się stopniowo (linijka po linijce, słowo po słowie)
-7) czytanie tekstu przez AI
-8) przygotowanie kodu pod czytanie przez aktorów
-9) AI premium (jaki?, kosztorys)
-10) umieszczenie na serwerze
-11) Aplikacja na telefon
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
