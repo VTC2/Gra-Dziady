@@ -1,21 +1,25 @@
-let tekst = {
-    "prolog": [
+const story = {
+    prolog: { text:[
         "Polska, rok 1823. Kraj rozdarty przez zaborców, gdzie wolność jest jedynie wspomnieniem, a nadzieja na niepodległość – marzeniem młodych serc. W Wilnie, pod czujnym okiem rosyjskiego kuratora Mikołaja Nowosilcowa, rozwija się tajna działalność patriotyczna. To tutaj, w murach Uniwersytetu Wileńskiego, narodziły się stowarzyszenia Filomatów i Filaretów – młodych ludzi, którzy wierzyli w siłę nauki, moralności i przyjaźni jako fundamenty odrodzenia narodu.",
         "Jednak ich ideały nie mogły pozostać niezauważone. W 1823 roku Nowosilcow rozpoczął brutalne śledztwo, które miało na celu nie tylko rozbicie tych organizacji, ale także zastraszenie całego społeczeństwa polskiego. Aresztowania, przesłuchania i wyroki zesłania stały się codziennością dla młodych patriotów. Wśród nich był Adam Mickiewicz – poeta, który swoje doświadczenia więzienne przekształcił w literacki pomnik narodowego cierpienia i walki.",
         "Tak powstała III część Dziadów – dzieło będące nie tylko aktem oskarżenia wobec rosyjskiego despotyzmu, ale również hymnem na cześć niezłomnego ducha polskiego narodu. W tej opowieści spotkamy Gustawa-Konrada – bohatera rozdartego między miłością do ojczyzny a gniewem wobec Boga. Jego walka stanie się symbolem losu całego narodu: uwięzionego, lecz niepokonanego. To historia o młodości skazanej na cierpienie, o tyranii próbującej zdusić wolność i o nadziei, która płonie nawet w najciemniejszych czasach."
     ],
-    "scena1_1": [
+    next: "scena1_1"
+},
+    scena1_1:{ text: [
         "więzień 1 (jęczy): To już trzeci dzień bez jedzenia… Ile jeszcze wytrzymam?:",
         "więzień 2 (szeptem): Cicho bądź! Jak strażnik usłyszy, to dostaniesz baty!",
         "więzień 1: A co mi po życiu? Lepiej umrzeć niż tak gnić…",
         "więzień 3 (z ironią): Umrzeć? To by było zbyt łatwe. Oni chcą, żebyśmy cierpieli."
     ],
-    "scena1_2x": [
-        "Gustaw rozmawia z więźniami",
-        "Gustaw pozostaje w milczeniu",
-        "Gustaw planuje ucieczkę"
-    ],
-    "scena1_2a": [
+    choices:[
+    { label: "Gustaw rozmawia z więźniami", next: "scena1_2a" },
+    { label: "Gustaw pozostaje w milczeniu", next: "scena1_2b" },
+    { label: "Gustaw planuje ucieczkę", next: "scena1_2c" }
+    ]
+    },
+
+    scena1_2a:{text: [
         "więzień 1: Kim jesteś, nowy? Wyglądasz na kogoś, kto nie pasuje do tego miejsca!",
         "Gustaw: Jestem jednym z was. Zabrano mnie za to, że kocham wolność i ojczyznę.",
         "Więzień 2: Wszyscy tu jesteśmy za to samo. Ale co z tego? Nie mamy szans na ucieczkę.",
@@ -27,7 +31,9 @@ let tekst = {
         "Strażnik: Cicho tam! Jeszcze jedno słowo, a wszyscy dostaniecie baty!",
         "Więźniowie milkną natychmiast, a Gustaw czuje na sobie ich spojrzenia. Choć strażnik uciszył ich rozmowę, nie udało mu się zdusić ducha, który właśnie zaczął się w nich budzić."
     ],
-    "scena1_2b": [
+    next: "scena1_3"},
+
+    scena1_2b: {text: [
         "Gustaw siedzi w kącie celi, ignorując rozmowy innych więźniów. Wpatruje się w ścianę i myśli o swoim losie",
         "Gustaw (myśli): Czy jestem tu sam? Czy ktoś jeszcze rozumie ten ból? Może lepiej skupić się na sobie… Na tym, co muszę zrobić.",
         "Gustaw siedzi w kącie celi, odgradzając się od reszty więźniów niewidzialnym murem obojętności. Jego spojrzenie wbite jest w zimne kamienne ściany, a myśli krążą wokół jego własnego losu. Nie szuka kontaktu z innymi – zamiast tego pogrąża się w introspekcji. W ciszy celi słychać jedynie jęki i szepty współwięźniów, ale Gustaw zdaje się ich nie zauważać.",
@@ -36,7 +42,8 @@ let tekst = {
         "Strażnik: Ty tam w kącie! Co kombinujesz? Lepiej nie próbuj żadnych sztuczek!",
         "Gustaw unosi wzrok na chwilę, ale nie odpowiada. Strażnik prycha i odchodzi dalej korytarzem. Cisza wraca do celi, a Gustaw ponownie pogrąża się w swoich myślach."
     ],
-    "scena1_2c": [
+    next: "scena1_3"},
+    scena1_2c: {text: [
         "Gustaw: Musimy coś zrobić! Nie możemy tu gnić bezczynnie.",
         "Więzień 1: A co ty niby proponujesz? Strażnicy są wszędzie.",
         "Gustaw: Zorganizujemy bunt. Jeśli wszyscy razem zaatakujemy, mamy szansę.",
@@ -46,14 +53,15 @@ let tekst = {
         "Gustaw przemawia do współwięźniów z pasją i determinacją. Jego głos przebija się przez mrok celi niczym promień światła w ciemności. Mówi o wolności, o konieczności działania i o tym, że bezczynność jest największym sprzymierzeńcem ich oprawców. Początkowo więźniowie patrzą na niego jak na szaleńca – przecież strażnicy są wszędzie, a każda próba buntu kończy się śmiercią lub torturami.",
         "Jednak Gustaw nie ustępuje. Jego słowa zaczynają trafiać do serc niektórych więźniów. Jeden z nich kiwa głową z aprobatą, inny podchodzi bliżej, by wysłuchać więcej szczegółów planu. Gustaw proponuje różne możliwości – od buntu po bardziej subtelne metody ucieczki, takie jak zdobycie munduru strażnika.",
         "W końcu kilku więźniów decyduje się wesprzeć jego plan. Zaczynają opracowywać szczegóły i analizować ryzyko. Choć nadal pełni obaw, w ich oczach pojawia się iskra nadziei."
-    ],
-    "scena1_3": [
-        "Jeden ze strażników nagle osuwa się na ziemię – wygląda na to, że zasłabł. Upada tuż przy kratach celi, jego dłoń zaciska się jeszcze na pęku kluczy, zanim bezwładnie opada na posadzkę. Drugi strażnik, zaniepokojony sytuacją, rzuca się po pomoc, zostawiając broń i mundur bez opieki. W celi zapada napięta cisza, przerywana tylko krótkim szeptem. Jeden z więźniów sięga ostrożnie przez kraty i udaje mu się wyrwać klucze z ręki omdlałego strażnika. Zamek zgrzyta cicho – krata ustępuje. Więźniowie spoglądają na Gustawa z napięciem. To niezwykła okazja, która może się już nigdy nie powtórzyć.."
-    ],
-    "scena1_4x": [
-        "Gustaw łapie za broń i biegnie ku wyjściu",
-        "Gustaw zakłada mundur strażnika i próbuje uciec niezauważony"
-    ],
+    ], next:  "scena1_3"},
+    scena1_3:{ text:[
+        "Jeden ze strażników nagle osuwa się na ziemię – wygląda na to, że zasłabł. Upada tuż przy kratach celi, jego dłoń zaciska się jeszcze na pęku kluczy, zanim bezwładnie opada na posadzkę. Drugi strażnik, zaniepokojony sytuacją, rzuca się po pomoc, zostawiając broń i mundur bez opieki. W celi zapada napięta cisza, przerywana tylko krótkim szeptem. Jeden z więźniów sięga ostrożnie przez kraty i udaje mu się wyrwać klucze z ręki omdlałego strażnika. Zamek zgrzyta cicho – krata ustępuje. Więźniowie spoglądają na Gustawa z napięciem. To niezwykła okazja, która może się już nigdy nie powtórzyć.."],
+        choices:[
+    { label: "Gustaw łapie za broń i biegnie ku wyjściu", next: "scena1_4a" },
+    { label: "Gustaw zakłada mundur strażnika i próbuje uciec niezauważony", next: "scena1_4b" }
+    ]
+},
+   
     "scena1_4a": [
         "Gustaw szybko chwyta broń strażnika, czując ciężar zimnego metalu w dłoniach. Jego serce bije jak szalone, a adrenalina zalewa całe ciało. Nie ma czasu na zastanowienie – to teraz albo nigdy. Wybiegając z celi, zaczyna biec przez korytarz, strzelając do napotkanych osób.",
         "Echo wystrzałów rozbrzmiewa w ciasnych murach więzienia, a krzyki strażników mieszają się z odgłosem kroków Gustawa. Każdy kolejny strzał przybliża go do wolności, ale jednocześnie zwiększa ryzyko. Strażnicy szybko mobilizują się do działania – ich okrzyki są coraz bliżej.",
@@ -426,3 +434,4 @@ let tekst = {
         "Koordynacja zaplecza produkcyjnego: Mateusz Sawicki "
     ]
 }
+export default story;
