@@ -10,12 +10,7 @@ function App() {
       
       <h1>gra</h1>
       <main><Gra></Gra></main>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-     
-      </div>
+      
       
     </>
   )
